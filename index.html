@@ -459,6 +459,32 @@
     display:flex;
     flex-direction:column;
   }
+  .simple-panel{
+    position:absolute;
+    inset:0;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:48px;
+    background:#fff;
+    z-index:40;
+    text-align:start;
+  }
+  .simple-panel-inner{
+    width:min(520px, 90%);
+  }
+  .simple-panel h2{
+    margin:0 0 12px;
+    font-size:32px;
+    font-weight:800;
+    color:#111;
+  }
+  .simple-panel p{
+    margin:0;
+    font-size:16px;
+    line-height:1.7;
+    color:#555;
+  }
   .right-slider{
     flex:1 1 auto;
     width:100%;
@@ -601,6 +627,36 @@
     height:100vh;
     border-top:none;
     border-bottom:none;
+  }
+  body.summary-right .right-slider,
+  body.summary-right .right-slider-nav{
+    display:none;
+  }
+  body.summary-right #simpleRightPanel{
+    display:flex;
+  }
+  body.summary-both .right-slider,
+  body.summary-both .right-slider-nav{
+    display:none;
+  }
+  body.summary-both #simpleRightPanel,
+  body.summary-both #simpleLeftPanel{
+    display:flex;
+  }
+  body.summary-both .frame-left .fnn3dFrame{
+    display:none;
+  }
+  body.swap-right .frame-left{
+    order:2;
+  }
+  body.swap-right .frame-right{
+    order:1;
+  }
+  body.swap-right #simpleLeftPanel{
+    display:flex;
+  }
+  body.swap-right .frame-left .fnn3dFrame{
+    display:none;
   }
   .map-panel{
     position:absolute;
@@ -2678,6 +2734,12 @@
         <div class="nav-item" id="mNavExtra5"><span class="nav-num">10</span><span class="nav-title">التوجيه والإرشاد وإجابة السائلين</span></div>
       </nav>
       <div class="frame-left">
+        <div class="simple-panel" id="simpleLeftPanel" aria-hidden="true">
+          <div class="simple-panel-inner" dir="auto">
+            <h2 id="simpleLeftHeadline"></h2>
+            <p id="simpleLeftDesc"></p>
+          </div>
+        </div>
         <button class="fullscreen-toggle left-toggle" id="toggleLeft" type="button" aria-label="Left fullscreen">
           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <path d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
@@ -2694,6 +2756,12 @@
         ></iframe>
       </div>
       <div class="frame-right" id="frameRight">
+        <div class="simple-panel" id="simpleRightPanel" aria-hidden="true">
+          <div class="simple-panel-inner" dir="auto">
+            <h2 id="simpleRightHeadline"></h2>
+            <p id="simpleRightDesc"></p>
+          </div>
+        </div>
         <button class="fullscreen-toggle right-toggle" id="toggleRight" type="button" aria-label="Right fullscreen">
           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <path d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
@@ -4141,6 +4209,72 @@
     }
   }
 
+  const SIMPLE_LAYOUTS = {
+    'sect-home': {
+      mode: 'summary-right',
+      headline: 'About',
+      desc: 'A brief overview of what the list includes and how the items are organized.'
+    },
+    'sect-about': {
+      mode: 'summary-both',
+      headline: 'About',
+      desc: 'A brief overview of what the list includes and how the items are organized.'
+    },
+    'sect-contact': {
+      mode: 'swap-right',
+      headline: 'الحلقات العلمية والدروس',
+      desc: 'ملخص قصير يوضح ما تتضمنه القائمة في هذا القسم.'
+    },
+    'sect-extra-2': {
+      mode: 'swap-right',
+      headline: 'المكتبة',
+      desc: 'ملخص قصير يوضح ما تتضمنه القائمة في هذا القسم.'
+    },
+    'sect-extra-3': {
+      mode: 'swap-right',
+      headline: 'الترجمة الشرعية',
+      desc: 'وصف موجز لما يظهر على الجانب الأيسر في هذا القسم.'
+    },
+    'sect-extra-5': {
+      mode: 'swap-right',
+      headline: 'التوجيه والإرشاد وإجابة السائلين',
+      desc: 'وصف موجز لما يظهر على الجانب الأيسر في هذا القسم.'
+    }
+  };
+
+  function setSimplePanelText(prefix, headline, desc){
+    const h = document.getElementById(`${prefix}Headline`);
+    const d = document.getElementById(`${prefix}Desc`);
+    if(h) h.textContent = headline || '';
+    if(d) d.textContent = desc || '';
+  }
+
+  function applyOptionLayout(key){
+    bodyEl.classList.remove('summary-right','summary-both','swap-right');
+    const leftPanel = document.getElementById('simpleLeftPanel');
+    const rightPanel = document.getElementById('simpleRightPanel');
+    if(leftPanel) leftPanel.setAttribute('aria-hidden', 'true');
+    if(rightPanel) rightPanel.setAttribute('aria-hidden', 'true');
+
+    const layout = SIMPLE_LAYOUTS[key];
+    if(!layout) return;
+
+    setSimplePanelText('simpleLeft', layout.headline, layout.desc);
+    setSimplePanelText('simpleRight', layout.headline, layout.desc);
+
+    if(layout.mode === 'summary-right'){
+      bodyEl.classList.add('summary-right');
+      if(rightPanel) rightPanel.setAttribute('aria-hidden', 'false');
+    } else if(layout.mode === 'summary-both'){
+      bodyEl.classList.add('summary-both');
+      if(rightPanel) rightPanel.setAttribute('aria-hidden', 'false');
+      if(leftPanel) leftPanel.setAttribute('aria-hidden', 'false');
+    } else if(layout.mode === 'swap-right'){
+      bodyEl.classList.add('swap-right');
+      if(leftPanel) leftPanel.setAttribute('aria-hidden', 'false');
+    }
+  }
+
   window.switchSection = function(id){
     document.querySelectorAll('.app-section').forEach(s => s.classList.remove('active-section'));
     const target = document.getElementById(id);
@@ -4179,6 +4313,7 @@
 
     setRightSlide(0);
     setDisplayContent(id);
+    applyOptionLayout(id);
     syncKaabaPhase(id);
     requestAnimationFrame(() => setRightSlide(0));
 
