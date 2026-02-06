@@ -161,11 +161,6 @@
     justify-content:center;
   }
   .fullscreen-toggle:hover{ background:rgba(0,0,0,0.85); }
-  .frame-toggle{
-    left:calc(var(--side-nav-width) + 12px);
-    right:auto;
-    transform:none;
-  }
   .fullscreen-toggle svg{
     width:16px;
     height:16px;
@@ -649,7 +644,6 @@
     border-top:none;
     border-bottom:none;
   }
-  body.fs-left .frame-toggle{ display:none; }
 
   body.fs-right .frame-right{
     position:fixed;
@@ -666,7 +660,6 @@
     border-top:none;
     border-bottom:none;
   }
-  body.fs-right .frame-toggle{ display:none; }
 
   body.fs-frame .frame-top-bar,
   body.fs-frame .frame-bottom-bar{ display:none; }
@@ -2759,11 +2752,6 @@
         <div class="nav-item" id="mNavExtra4"><span class="nav-num">9</span><span class="nav-title">هيئة الأمر بالمعروف</span></div>
         <div class="nav-item" id="mNavExtra5"><span class="nav-num">10</span><span class="nav-title">التوجيه والإرشاد وإجابة السائلين</span></div>
       </nav>
-      <button class="fullscreen-toggle frame-toggle" id="toggleFrame" type="button" aria-label="Frame fullscreen">
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-      </button>
       <div class="frame-left">
         <button class="fullscreen-toggle left-toggle" id="toggleLeft" type="button" aria-label="Left fullscreen">
           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -2773,7 +2761,7 @@
         <iframe
           class="fnn3dFrame"
           id="leftKaabaFrame"
-          src="test.html"
+          src="/fnn-3d-kaaba/"
           title="Sacred Makkah 3D"
           allow="fullscreen; autoplay"
           allowfullscreen
@@ -4322,7 +4310,6 @@
 
   safeAdd('toggleLeft','click',() => toggleFullscreen('left'));
   safeAdd('toggleRight','click',() => toggleFullscreen('right'));
-  safeAdd('toggleFrame','click',() => toggleFullscreen('frame'));
 
   document.querySelectorAll('.view-tab').forEach(tab => {
     tab.addEventListener('click', (e) => {
