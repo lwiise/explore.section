@@ -415,67 +415,6 @@
     gap:0;
     padding:0;
   }
-  .frame-top-bar,
-  .frame-bottom-bar{
-    flex:0 0 10vh;
-    height:10vh;
-    width:100%;
-    background:#fff;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    position:absolute;
-    left:0;
-    right:0;
-    z-index:30;
-    pointer-events:none;
-  }
-  .frame-top-bar{ top:0; }
-  .frame-logo{
-    height:52.8px;
-    width:auto;
-    max-width:70%;
-    display:block;
-  }
-  .frame-bottom-bar{
-    justify-content:flex-end;
-    padding:0;
-    gap:0;
-    bottom:0;
-  }
-  .tv-strip{
-    position:absolute;
-    inset:0;
-    display:flex;
-    align-items:stretch;
-    padding:0 28px;
-    gap:0;
-  }
-  .tv-slot{
-    flex:1 1 50%;
-    display:flex;
-    align-items:stretch;
-    justify-content:center;
-  }
-  .tv-screen{
-    height:100%;
-    width:auto;
-    aspect-ratio:16 / 9;
-    border:5px solid #9a9a9a;
-    border-radius:20px;
-    background:#fff;
-    overflow:hidden;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-  }
-  .tv-media{
-    width:100%;
-    height:100%;
-    aspect-ratio:16 / 9;
-    display:block;
-    object-fit:cover;
-  }
   .frame-headline{
     margin:0;
     font-size:28px;
@@ -637,8 +576,6 @@
     z-index:2000;
   }
   body.fs-left .frame-right{ display:none; }
-  body.fs-left .frame-top-bar,
-  body.fs-left .frame-bottom-bar{ display:none; }
   body.fs-left .frame-split{
     height:100vh;
     border-top:none;
@@ -653,16 +590,12 @@
     z-index:2000;
   }
   body.fs-right .frame-left{ display:none; }
-  body.fs-right .frame-top-bar,
-  body.fs-right .frame-bottom-bar{ display:none; }
   body.fs-right .frame-split{
     height:100vh;
     border-top:none;
     border-bottom:none;
   }
 
-  body.fs-frame .frame-top-bar,
-  body.fs-frame .frame-bottom-bar{ display:none; }
   body.fs-frame .frame-split{
     flex:0 0 100vh;
     height:100vh;
@@ -2592,11 +2525,6 @@
       gap:0;
       padding:0;
     }
-    .frame-top-bar,
-    .frame-bottom-bar{
-      flex:0 0 10vh;
-      height:10vh;
-    }
     .frame-split{ flex-direction:column; }
     .frame-left,
     .frame-right{
@@ -2723,9 +2651,6 @@
 <body>
 <div class="layout">
   <div class="display-frame">
-    <div class="frame-top-bar">
-      <img class="frame-logo" src="https://cdn.prod.website-files.com/6915e045b3e3d5a1e709a05d/696bfe1c41662fa6f44a3415_Screenshot_2026-01-17_222117-removebg-preview.png" alt="المعرض">
-    </div>
     <div class="frame-split">
       <nav class="side-nav" id="sideNav">
         <div class="nav-item" id="navHome"><span class="nav-num">1</span><span class="nav-title">عام</span></div>
@@ -3248,20 +3173,6 @@
             <div class="slide-image-wrap">
               <img id="rightSlideImg2" src="https://cdn.prod.website-files.com/6915e045b3e3d5a1e709a05d/696b9c615c5f7359cf0e0bcd_ChatGPT%20Image%20Jan%2017%2C%202026%2C%2003_26_14%20PM.png" alt="صورة للمصاحف">
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="frame-bottom-bar" id="frameBottomBar">
-      <div class="tv-strip" id="option1TvStrip">
-        <div class="tv-slot">
-          <div class="tv-screen">
-            <img class="tv-media" src="https://cdn.prod.website-files.com/6915e045b3e3d5a1e709a05d/696e453cf90a493d25ce4d79_Screenshot%202026-01-19%20155219.png" alt="TV left">
-          </div>
-        </div>
-        <div class="tv-slot">
-          <div class="tv-screen">
-            <img class="tv-media" src="https://cdn.prod.website-files.com/6915e045b3e3d5a1e709a05d/696cd7032a368dd983db313e_Gemini_Generated_Image_g4hqrng4hqrng4hq.avif" alt="TV right">
           </div>
         </div>
       </div>
