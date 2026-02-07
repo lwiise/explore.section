@@ -4096,9 +4096,47 @@
     option9: 'sect-extra-4',
     option10: 'sect-extra-5'
   };
-  const RIGHT_SUMMARY = {
-    headline: 'About',
-    desc: 'A brief overview of what the list includes and how the items are organized.'
+  const RIGHT_SUMMARIES = {
+    'sect-home': {
+      headline: 'عام',
+      desc: 'عرض ثلاثي الأبعاد تفاعلي يقدّم مشاهد تمهيدية مرتبطة بالمحتوى العام لهذا القسم.'
+    },
+    'sect-about': {
+      headline: 'الإمامة',
+      desc: 'عرض ثلاثي الأبعاد للمسجد الحرام يُظهر المشهد بصيغة تفاعلية على اليسار.'
+    },
+    'sect-services': {
+      headline: 'المؤذنون',
+      desc: 'عرض ثلاثي الأبعاد تفاعلي مرتبط بالمؤذنين ويعرض المشهد بصيغة بصرية.'
+    },
+    'sect-gallery': {
+      headline: 'الحلقات القرآنية والمصاحف',
+      desc: 'عرض ثلاثي الأبعاد تفاعلي يواكب محتوى المعرض في هذا القسم.'
+    },
+    'sect-contact': {
+      headline: 'الحلقات العلمية والدروس',
+      desc: 'خريطة متحركة للكعبة (تدوير/انزلاق بصري) تُعرض على اليسار.'
+    },
+    'sect-extra-1': {
+      headline: 'التطويف',
+      desc: 'عرض ثلاثي الأبعاد تفاعلي يواكب محتوى هذا القسم.'
+    },
+    'sect-extra-2': {
+      headline: 'المكتبة',
+      desc: 'واجهة المكتبة وصناديق الكتب المعروضة موجودة في اليسار.'
+    },
+    'sect-extra-3': {
+      headline: 'الترجمة الشرعية',
+      desc: 'خريطة عالمية تفاعلية مع اختيار اللغات تظهر في اليسار.'
+    },
+    'sect-extra-4': {
+      headline: 'هيئة الأمر بالمعروف',
+      desc: 'عرض ثلاثي الأبعاد تفاعلي يواكب محتوى هذا القسم.'
+    },
+    'sect-extra-5': {
+      headline: 'التوجيه والإرشاد وإجابة السائلين',
+      desc: 'عرض ثلاثي الأبعاد إضافي يظهر في اليسار (عرض تجريبي ثلاثي الأبعاد).'
+    }
   };
 
   function applyLeftSideLayout(key){
@@ -4163,9 +4201,10 @@
     const panel = document.getElementById('simpleRightPanel');
     const headline = document.getElementById('simpleRightHeadline');
     const desc = document.getElementById('simpleRightDesc');
+    const data = RIGHT_SUMMARIES[key] || RIGHT_SUMMARIES['sect-home'];
     if(panel) panel.setAttribute('aria-hidden', 'false');
-    if(headline) headline.textContent = RIGHT_SUMMARY.headline;
-    if(desc) desc.textContent = RIGHT_SUMMARY.desc;
+    if(headline) headline.textContent = data.headline || '';
+    if(desc) desc.textContent = data.desc || '';
   }
 
   window.switchSection = function(id){
