@@ -480,6 +480,9 @@
     display:flex;
     flex-direction:column;
   }
+  .frame-right .right-toggle{
+    display:none;
+  }
   .simple-panel{
     position:absolute;
     inset:0;
@@ -649,34 +652,23 @@
     border-top:none;
     border-bottom:none;
   }
-  body.summary-right .right-slider,
-  body.summary-right .right-slider-nav{
+  .frame-right .right-slider,
+  .frame-right .right-slider-nav{
     display:none;
   }
-  body.summary-right #simpleRightPanel{
+  .frame-right #simpleRightPanel{
     display:flex;
   }
-  body.summary-both .right-slider,
-  body.summary-both .right-slider-nav{
+  #leftStage{
+    position:absolute;
+    inset:0;
     display:none;
+    z-index:40;
   }
-  body.summary-both #simpleRightPanel,
-  body.summary-both #simpleLeftPanel{
-    display:flex;
+  body.left-stage-active #leftStage{
+    display:block;
   }
-  body.summary-both .frame-left .fnn3dFrame{
-    display:none;
-  }
-  body.swap-right .frame-left{
-    order:2;
-  }
-  body.swap-right .frame-right{
-    order:1;
-  }
-  body.swap-right #simpleLeftPanel{
-    display:flex;
-  }
-  body.swap-right .frame-left .fnn3dFrame{
+  body.left-stage-active .frame-left .fnn3dFrame{
     display:none;
   }
   .map-panel{
@@ -687,10 +679,10 @@
     display:none;
   }
   #mapOption8{ display:none; }
-  .frame-right.show-world-nav #mapOption5{ display:none; }
-  .frame-right.show-world-nav #mapOption8{ display:block; }
-  .frame-right:not(.show-world-nav) #mapOption5{ display:block; }
-  .frame-right:not(.show-world-nav) #mapOption8{ display:none; }
+  .left-stage.show-world-nav #mapOption5{ display:none; }
+  .left-stage.show-world-nav #mapOption8{ display:block; }
+  .left-stage:not(.show-world-nav) #mapOption5{ display:block; }
+  .left-stage:not(.show-world-nav) #mapOption8{ display:none; }
   .map-country-nav{
     position:absolute;
     right:18px;
@@ -1151,67 +1143,22 @@
     border:0;
     display:block;
   }
-  .frame-right.show-map .map-panel{
+  .left-stage.show-map .map-panel{
     display:block;
   }
-  .frame-right.show-map .shop{
-    display:none;
-  }
-  .frame-right.show-kaaba .kaaba-panel{
+  .left-stage.show-sketchfab .sketchfab-panel{
     display:block;
   }
-  .frame-right.show-kaaba .shop{
-    display:none;
-  }
-  .frame-right.show-kaaba .map-panel{
-    display:none;
-  }
-  .frame-right.show-kaaba-dup .kaaba-dup-panel{
+  .left-stage.show-sutro .sutro-panel{
     display:block;
   }
-  .frame-right.show-kaaba-dup .shop,
-  .frame-right.show-kaaba-dup .map-panel,
-  .frame-right.show-kaaba-dup .kaaba-panel,
-  .frame-right.show-kaaba-dup .sketchfab-panel,
-  .frame-right.show-kaaba-dup .books-panel{
-    display:none;
-  }
-  .frame-right.show-sketchfab .sketchfab-panel{
-    display:block;
-  }
-  .frame-right.show-sketchfab .shop{
-    display:none;
-  }
-  .frame-right.show-sketchfab .map-panel{
-    display:none;
-  }
-  .frame-right.show-sketchfab .kaaba-panel{
-    display:none;
-  }
-  .frame-right.show-world-nav .map-country-nav{
+  .left-stage.show-books .books-panel{
     display:flex;
   }
-  .frame-right.show-world-nav #mapWallBox{
-    display:none;
-  }
-  .frame-right.show-sutro .sutro-panel{
-    display:block;
-  }
-  .frame-right.show-sutro .shop,
-  .frame-right.show-sutro .map-panel,
-  .frame-right.show-sutro .kaaba-panel,
-  .frame-right.show-sutro .kaaba-dup-panel,
-  .frame-right.show-sutro .sketchfab-panel,
-  .frame-right.show-sutro .books-panel{
-    display:none;
-  }
-  .frame-right.show-books .books-panel{
+  .left-stage.show-world-nav .map-country-nav{
     display:flex;
   }
-  .frame-right.show-books .shop,
-  .frame-right.show-books .map-panel,
-  .frame-right.show-books .kaaba-panel,
-  .frame-right.show-books .sketchfab-panel{
+  .left-stage.show-world-nav #mapWallBox{
     display:none;
   }
   .display-table-wrap{
@@ -2762,6 +2709,110 @@
             <p id="simpleLeftDesc"></p>
           </div>
         </div>
+        <div class="left-stage" id="leftStage">
+          <div class="map-panel" id="mapPanel">
+            <div id="mapOption5" class="map-canvas"></div>
+            <div id="mapOption8" class="map-canvas"></div>
+            <div class="map-country-nav" id="mapCountryNav">
+              <button type="button" data-lang="ar">العربية</button>
+              <button type="button" data-lang="en">الإنجليزية</button>
+              <button type="button" data-lang="tr">التركية</button>
+              <button type="button" data-lang="id">الإندونيسية</button>
+              <button type="button" data-lang="fr">الفرنسية</button>
+              <button type="button" data-lang="es">الإسبانية</button>
+            </div>
+            <div class="map-kaaba-box" id="mapWallBox">
+              <div class="map-wall-rotator">
+                <div class="map-wall" id="mapWall">
+                  <div class="map-wall-content" aria-hidden="true"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="sketchfab-panel" id="sketchfabPanel">
+            <div class="sketchfab-embed-wrapper">
+              <iframe
+                title="Masjid Al-Haram Makkah"
+                frameborder="0"
+                allowfullscreen
+                mozallowfullscreen="true"
+                webkitallowfullscreen="true"
+                allow="autoplay; fullscreen; xr-spatial-tracking"
+                xr-spatial-tracking
+                execution-while-out-of-viewport
+                execution-while-not-rendered
+                web-share
+                src="https://sketchfab.com/models/7d84e450db6240bd9add035640ba2005/embed?autostart=1&autospin=0.2&preload=1">
+              </iframe>
+            </div>
+          </div>
+          <div class="sutro-panel" id="sutroPanel">
+            <iframe
+              title="Sutro Tower in 3D"
+              src="https://vincentwoo.com/3d/sutro_tower/"
+              allow="xr-spatial-tracking; fullscreen; autoplay"
+              allowfullscreen
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+          <div class="books-panel" id="booksPanel">
+            <div class="books-gallery-view" id="booksGalleryView">
+              <div class="books-gallery-head">
+                <h3 class="books-gallery-title">معرض الكتب</h3>
+                <p class="books-gallery-sub">نماذج كتب رقمية متاحة للعرض والقراءة.</p>
+              </div>
+              <div class="books-gallery" id="booksGallery"></div>
+            </div>
+            <div class="book-detail-view" id="bookDetailView">
+              <div class="book-detail-head">
+                <button class="book-back" type="button" id="bookBack">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  رجوع
+                </button>
+                <h3 class="book-detail-title" id="bookTitle">كتاب</h3>
+              </div>
+              <div class="book-detail-card">
+                <div class="book-summary">
+                <h3>ملخص الكتاب</h3>
+                <p id="bookSummary">اختر كتابًا لعرض الملخص وملف القراءة.</p>
+              </div><div class="book-detail-hero">
+                <div class="book-cover">
+                  <img id="bookCover" src="" alt="">
+                </div>
+                <div class="book-meta">
+                  <div class="book-label">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                      <path d="M7 18h10M8 6h8M9 10h6M10 14h4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+                    </svg>
+                    المؤلف
+                  </div>
+                  <strong id="bookAuthor">—</strong>
+                  <div class="book-label">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                      <path d="M4 7h16M4 12h10M4 17h7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+                    </svg>
+                    الفئة
+                  </div>
+                  <strong id="bookCategory">—</strong>
+                </div>
+              </div>
+              
+              </div>
+              <div class="pdf-viewer" id="pdfViewer">
+                <iframe 
+                  src="https://online.fliphtml5.com/makaa/book_pages_16x9_cover_centered/#p=1" 
+                  style="width:100%;height:600px;border:none;min-height:400px;"
+                  allowfullscreen 
+                  loading="lazy"
+                  title="FlipHTML5 Book Viewer"
+                ></iframe>
+              </div>
+          </div>
+          </div>
+        </div>
         <button class="fullscreen-toggle left-toggle" id="toggleLeft" type="button" aria-label="Left fullscreen">
           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <path d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
@@ -2778,7 +2829,7 @@
         ></iframe>
       </div>
       <div class="frame-right" id="frameRight">
-        <div class="simple-panel" id="simpleRightPanel" aria-hidden="true">
+        <div class="simple-panel" id="simpleRightPanel" aria-hidden="false">
           <div class="simple-panel-inner" dir="auto">
             <h2 id="simpleRightHeadline"></h2>
             <p id="simpleRightDesc"></p>
@@ -2808,128 +2859,6 @@
         </div>
         <div class="right-slider" id="rightSlider">
           <div class="right-slide" data-slide="0">
-            <div class="map-panel" id="mapPanel">
-              <div id="mapOption5" class="map-canvas"></div>
-              <div id="mapOption8" class="map-canvas"></div>
-              <div class="map-country-nav" id="mapCountryNav">
-                <button type="button" data-lang="ar">العربية</button>
-                <button type="button" data-lang="en">الإنجليزية</button>
-                <button type="button" data-lang="tr">التركية</button>
-                <button type="button" data-lang="id">الإندونيسية</button>
-                <button type="button" data-lang="fr">الفرنسية</button>
-                <button type="button" data-lang="es">الإسبانية</button>
-              </div>
-              <div class="map-kaaba-box" id="mapWallBox">
-                <div class="map-wall-rotator">
-                  <div class="map-wall" id="mapWall">
-                    <div class="map-wall-content" aria-hidden="true"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="kaaba-panel" id="kaabaPanel">
-              <iframe
-                class="fnn3dFrame"
-                src="/fnn-3d-kaaba/"
-                title="Sacred Makkah 3D"
-                allow="fullscreen; autoplay"
-                allowfullscreen
-                loading="eager"
-              ></iframe>
-            </div>
-            <div class="kaaba-dup-panel" id="kaabaDupPanel">
-              <iframe
-                class="fnn3dFrame"
-                src="/fnn-3d-kaaba-static/"
-                title="FNN 3D Kaaba Duplicate"
-                allow="fullscreen; autoplay"
-                allowfullscreen
-                loading="eager"
-              ></iframe>
-            </div>
-            <div class="sketchfab-panel" id="sketchfabPanel">
-              <div class="sketchfab-embed-wrapper">
-                <iframe
-                  title="Masjid Al-Haram Makkah"
-                  frameborder="0"
-                  allowfullscreen
-                  mozallowfullscreen="true"
-                  webkitallowfullscreen="true"
-                  allow="autoplay; fullscreen; xr-spatial-tracking"
-                  xr-spatial-tracking
-                  execution-while-out-of-viewport
-                  execution-while-not-rendered
-                  web-share
-                  src="https://sketchfab.com/models/7d84e450db6240bd9add035640ba2005/embed?autostart=1&autospin=0.2&preload=1">
-                </iframe>
-              </div>
-            </div>
-            <div class="sutro-panel" id="sutroPanel">
-              <iframe
-                title="Sutro Tower in 3D"
-                src="https://vincentwoo.com/3d/sutro_tower/"
-                allow="xr-spatial-tracking; fullscreen; autoplay"
-                allowfullscreen
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-              ></iframe>
-            </div>
-            <div class="books-panel" id="booksPanel">
-              <div class="books-gallery-view" id="booksGalleryView">
-                <div class="books-gallery-head">
-                  <h3 class="books-gallery-title">معرض الكتب</h3>
-                  <p class="books-gallery-sub">نماذج كتب رقمية متاحة للعرض والقراءة.</p>
-                </div>
-                <div class="books-gallery" id="booksGallery"></div>
-              </div>
-              <div class="book-detail-view" id="bookDetailView">
-                <div class="book-detail-head">
-                  <button class="book-back" type="button" id="bookBack">
-                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                      <path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    رجوع
-                  </button>
-                  <h3 class="book-detail-title" id="bookTitle">كتاب</h3>
-                </div>
-                <div class="book-detail-card">
-                  <div class="book-summary">
-                  <h3>ملخص الكتاب</h3>
-                  <p id="bookSummary">اختر كتابًا لعرض الملخص وملف القراءة.</p>
-                </div><div class="book-detail-hero">
-                  <div class="book-cover">
-                    <img id="bookCover" src="" alt="">
-                  </div>
-                  <div class="book-meta">
-                    <div class="book-label">
-                      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                        <path d="M7 18h10M8 6h8M9 10h6M10 14h4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
-                      </svg>
-                      المؤلف
-                    </div>
-                    <strong id="bookAuthor">—</strong>
-                    <div class="book-label">
-                      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                        <path d="M4 7h16M4 12h10M4 17h7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
-                      </svg>
-                      الفئة
-                    </div>
-                    <strong id="bookCategory">—</strong>
-                  </div>
-                </div>
-                
-                </div>
-                <div class="pdf-viewer" id="pdfViewer">
-                  <iframe 
-                    src="https://online.fliphtml5.com/makaa/book_pages_16x9_cover_centered/#p=1" 
-                    style="width:100%;height:600px;border:none;min-height:400px;"
-                    allowfullscreen 
-                    loading="lazy"
-                    title="FlipHTML5 Book Viewer"
-                  ></iframe>
-                </div>
-            </div>
-            </div>
             <aside class="shop" id="shop">
 
     <!-- HOME -->
@@ -3387,6 +3316,7 @@
   let goldMarker = null;
   const mapElOption5 = document.getElementById('mapOption5');
   const mapElOption8 = document.getElementById('mapOption8');
+  const leftStage = document.getElementById('leftStage');
   const frameRight = document.getElementById('frameRight');
   const enableMapboxOption5 = !!(mapElOption5 && window.mapboxgl);
   const enableMapboxOption8 = !!(mapElOption8 && window.mapboxgl);
@@ -3719,7 +3649,7 @@
     }
     if(galleryMapFrame) return;
     const animate = () => {
-      if(!map || !frameRight || !frameRight.classList.contains('show-map')){
+      if(!map || !leftStage || !leftStage.classList.contains('show-map')){
         galleryMapFrame = null;
         return;
       }
@@ -3736,9 +3666,9 @@
     }
     if(
       map &&
-      frameRight &&
-      frameRight.classList.contains('show-map') &&
-      !frameRight.classList.contains('show-world-nav')
+      leftStage &&
+      leftStage.classList.contains('show-map') &&
+      !leftStage.classList.contains('show-world-nav')
     ){
       map.easeTo({ bearing: KAABA_BEARING, pitch: KAABA_PITCH, duration: 600 });
     }
@@ -4169,17 +4099,6 @@
   });
 
   function setDisplayContent(key){
-    const data = DISPLAY_CONTENT[key] || DISPLAY_CONTENT['sect-gallery'];
-    const headline = document.getElementById('displayHeadline');
-    if(headline) headline.textContent = data.title;
-    const rightEl = document.getElementById('tableRight');
-    if(rightEl) rightEl.textContent = data.table.right;
-    const leftEl = document.getElementById('tableLeft');
-    if(leftEl) leftEl.textContent = data.table.left;
-    const techEl = document.getElementById('tableTech');
-    if(techEl) techEl.textContent = data.table.tech;
-    const topicEl = document.getElementById('tableTopic');
-    if(topicEl) topicEl.textContent = data.table.topic;
     applyRightSideLayout(key);
   }
 
@@ -4195,58 +4114,76 @@
     option9: 'sect-extra-4',
     option10: 'sect-extra-5'
   };
-  const LEFT_AL_HARAM_SRC = "test.html";
-  const leftDefaultSrc = leftKaabaFrame ? leftKaabaFrame.getAttribute('src') : "";
-
-  function setLeftFrameSrc(src){
-    if(!leftKaabaFrame || !src) return;
-    const current = leftKaabaFrame.getAttribute('src');
-    if(current !== src){
-      leftKaabaFrame.setAttribute('src', src);
-    }
-  }
+  const RIGHT_SUMMARY = {
+    headline: 'About',
+    desc: 'A brief overview of what the list includes and how the items are organized.'
+  };
 
   function applyLeftSideLayout(key){
-    bodyEl.classList.remove('summary-right','summary-both','swap-right','option-7');
-    const leftPanel = document.getElementById('simpleLeftPanel');
-    const rightPanel = document.getElementById('simpleRightPanel');
-    if(leftPanel) leftPanel.setAttribute('aria-hidden', 'true');
-    if(rightPanel) rightPanel.setAttribute('aria-hidden', 'true');
+    bodyEl.classList.remove('option-7','left-stage-active');
+    if(leftStage){
+      leftStage.classList.remove('show-map','show-world-nav','show-books','show-sketchfab','show-sutro');
+    }
 
-    if(key === OPTION_KEYS.option2){
-      setLeftFrameSrc(LEFT_AL_HARAM_SRC);
-    } else if(leftDefaultSrc){
-      setLeftFrameSrc(leftDefaultSrc);
+    const showSketchfab = key === OPTION_KEYS.option2;
+    const showMap = key === OPTION_KEYS.option5 || key === OPTION_KEYS.option8;
+    const showWorldNav = key === OPTION_KEYS.option8;
+    const showBooks = key === OPTION_KEYS.option7;
+    const showSutro = key === OPTION_KEYS.option10;
+    const needsStage = showSketchfab || showMap || showBooks || showSutro;
+
+    if(needsStage){
+      bodyEl.classList.add('left-stage-active');
+    }
+
+    if(leftStage){
+      if(showSketchfab) leftStage.classList.add('show-sketchfab');
+      if(showMap) leftStage.classList.add('show-map');
+      if(showWorldNav) leftStage.classList.add('show-world-nav');
+      if(showBooks) leftStage.classList.add('show-books');
+      if(showSutro) leftStage.classList.add('show-sutro');
     }
 
     if(key === OPTION_KEYS.option7){
       bodyEl.classList.add('option-7');
     }
+
+    if(goldMarker && goldMarker.getElement()){
+      goldMarker.getElement().style.display = showWorldNav ? 'none' : 'flex';
+    }
+    if(showWorldNav && !option8Map){
+      pendingWorldFocus = true;
+    }
+    if(showMap){
+      if(showWorldNav){
+        if(option8Map){
+          option8Map.resize();
+          setMapFog(option8Map, 'world');
+          focusWorldMap(option8Map, true);
+          setMapInteractive(option8Map, true);
+        }
+      } else if(map){
+        map.resize();
+        setMapFog(map, 'normal');
+        map.stop();
+        focusKaabaMap(map);
+        setMapInteractive(map, false);
+      }
+    }
+    if(showMap && !showWorldNav){
+      startGalleryMapMotion();
+    } else {
+      stopGalleryMapMotion();
+    }
   }
 
   function applyRightSideLayout(key){
-    const isOption6 = key === OPTION_KEYS.option6;
-    const showMap = false;
-    const showKaaba = false;
-    const showKaabaDup = isOption6;
-    const showSutro = false;
-    const showSketchfab = !isOption6;
-    const showBooks = false;
-    const showWorldNav = false;
-
-    if(frameRight){
-      frameRight.classList.toggle('show-map', showMap);
-      frameRight.classList.toggle('show-kaaba', showKaaba);
-      frameRight.classList.toggle('show-kaaba-dup', showKaabaDup);
-      frameRight.classList.toggle('show-sutro', showSutro);
-      frameRight.classList.toggle('show-sketchfab', showSketchfab);
-      frameRight.classList.toggle('show-books', showBooks);
-      frameRight.classList.toggle('show-world-nav', showWorldNav);
-      frameRight.classList.toggle('show-option1-embed', true);
-    }
-
-    setRightSlidesForOption(OPTION_KEYS.option1);
-    stopGalleryMapMotion();
+    const panel = document.getElementById('simpleRightPanel');
+    const headline = document.getElementById('simpleRightHeadline');
+    const desc = document.getElementById('simpleRightDesc');
+    if(panel) panel.setAttribute('aria-hidden', 'false');
+    if(headline) headline.textContent = RIGHT_SUMMARY.headline;
+    if(desc) desc.textContent = RIGHT_SUMMARY.desc;
   }
 
   window.switchSection = function(id){
