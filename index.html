@@ -447,6 +447,27 @@
     overflow:hidden;
     position:relative;
   }
+  .left-option-headline{
+    position:absolute;
+    top:16px;
+    left:16px;
+    z-index:60;
+    padding:8px 12px;
+    border-radius:12px;
+    background:rgba(0,0,0,0.55);
+    color:#fff;
+    font-size:14px;
+    font-weight:700;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    display:none;
+    pointer-events:none;
+  }
+  body.option-7 .left-option-headline{
+    display:block;
+    left:auto;
+    right:16px;
+  }
   .frame-left .fnn3dFrame{
     width:calc(100% + var(--side-nav-width));
     margin-left:calc(var(--side-nav-width) * -1);
@@ -2734,6 +2755,7 @@
         <div class="nav-item" id="mNavExtra5"><span class="nav-num">10</span><span class="nav-title">التوجيه والإرشاد وإجابة السائلين</span></div>
       </nav>
       <div class="frame-left">
+        <div class="left-option-headline" id="option7Headline">Marid with 600</div>
         <div class="simple-panel" id="simpleLeftPanel" aria-hidden="true">
           <div class="simple-panel-inner" dir="auto">
             <h2 id="simpleLeftHeadline"></h2>
@@ -4158,13 +4180,60 @@
     if(techEl) techEl.textContent = data.table.tech;
     const topicEl = document.getElementById('tableTopic');
     if(topicEl) topicEl.textContent = data.table.topic;
-    const showMap = key === 'sect-contact' || key === 'sect-extra-3';
-    const showKaaba = key === 'sect-extra-4';
-    const showKaabaDup = key === 'sect-extra-1';
-    const showSutro = key === 'sect-extra-5';
-    const showSketchfab = key === 'sect-home';
-    const showBooks = key === 'sect-extra-2';
-    const showWorldNav = key === 'sect-extra-3';
+    applyRightSideLayout(key);
+  }
+
+  const OPTION_KEYS = {
+    option1: 'sect-home',
+    option2: 'sect-about',
+    option3: 'sect-services',
+    option4: 'sect-gallery',
+    option5: 'sect-contact',
+    option6: 'sect-extra-1',
+    option7: 'sect-extra-2',
+    option8: 'sect-extra-3',
+    option9: 'sect-extra-4',
+    option10: 'sect-extra-5'
+  };
+  const LEFT_AL_HARAM_SRC = "test.html";
+  const leftDefaultSrc = leftKaabaFrame ? leftKaabaFrame.getAttribute('src') : "";
+
+  function setLeftFrameSrc(src){
+    if(!leftKaabaFrame || !src) return;
+    const current = leftKaabaFrame.getAttribute('src');
+    if(current !== src){
+      leftKaabaFrame.setAttribute('src', src);
+    }
+  }
+
+  function applyLeftSideLayout(key){
+    bodyEl.classList.remove('summary-right','summary-both','swap-right','option-7');
+    const leftPanel = document.getElementById('simpleLeftPanel');
+    const rightPanel = document.getElementById('simpleRightPanel');
+    if(leftPanel) leftPanel.setAttribute('aria-hidden', 'true');
+    if(rightPanel) rightPanel.setAttribute('aria-hidden', 'true');
+
+    if(key === OPTION_KEYS.option2){
+      setLeftFrameSrc(LEFT_AL_HARAM_SRC);
+    } else if(leftDefaultSrc){
+      setLeftFrameSrc(leftDefaultSrc);
+    }
+
+    if(key === OPTION_KEYS.option7){
+      bodyEl.classList.add('option-7');
+    }
+  }
+
+  function applyRightSideLayout(key){
+    const isOption6 = key === OPTION_KEYS.option6;
+    const showMap = false;
+    const showKaaba = false;
+    const showKaabaDup = isOption6;
+    const showSutro = false;
+    const showSketchfab = !isOption6;
+    const showBooks = false;
+    const showWorldNav = false;
+
     if(frameRight){
       frameRight.classList.toggle('show-map', showMap);
       frameRight.classList.toggle('show-kaaba', showKaaba);
@@ -4173,106 +4242,11 @@
       frameRight.classList.toggle('show-sketchfab', showSketchfab);
       frameRight.classList.toggle('show-books', showBooks);
       frameRight.classList.toggle('show-world-nav', showWorldNav);
-      frameRight.classList.toggle('show-option1-embed', key === 'sect-home');
+      frameRight.classList.toggle('show-option1-embed', true);
     }
-    setRightSlidesForOption(key);
-    if(goldMarker && goldMarker.getElement()){
-      goldMarker.getElement().style.display = showWorldNav ? 'none' : 'flex';
-    }
-    if(showWorldNav && !option8Map){
-      pendingWorldFocus = true;
-    }
-    if(showMap){
-      if(showWorldNav){
-        if(option8Map){
-          option8Map.resize();
-          setMapFog(option8Map, 'world');
-          focusWorldMap(option8Map, true);
-          setMapInteractive(option8Map, true);
-        }
-      } else if(map){
-        map.resize();
-        setMapFog(map, 'normal');
-        map.stop();
-        focusKaabaMap(map);
-        setMapInteractive(map, false);
-      }
-    }
-    if(showBooks){
-      if(booksGalleryView) booksGalleryView.style.display = "flex";
-      if(bookDetailView) bookDetailView.classList.remove('active');
-    }
-    if(showMap && !showWorldNav){
-      startGalleryMapMotion();
-    } else {
-      stopGalleryMapMotion();
-    }
-  }
 
-  const SIMPLE_LAYOUTS = {
-    'sect-home': {
-      mode: 'summary-right',
-      headline: 'About',
-      desc: 'A brief overview of what the list includes and how the items are organized.'
-    },
-    'sect-about': {
-      mode: 'summary-right',
-      headline: 'About',
-      desc: 'A brief overview of what the list includes and how the items are organized.'
-    },
-    'sect-contact': {
-      mode: 'swap-right',
-      headline: 'الحلقات العلمية والدروس',
-      desc: 'ملخص قصير يوضح ما تتضمنه القائمة في هذا القسم.'
-    },
-    'sect-extra-2': {
-      mode: 'swap-right',
-      headline: 'المكتبة',
-      desc: 'ملخص قصير يوضح ما تتضمنه القائمة في هذا القسم.'
-    },
-    'sect-extra-3': {
-      mode: 'swap-right',
-      headline: 'الترجمة الشرعية',
-      desc: 'وصف موجز لما يظهر على الجانب الأيسر في هذا القسم.'
-    },
-    'sect-extra-5': {
-      mode: 'swap-right',
-      headline: 'التوجيه والإرشاد وإجابة السائلين',
-      desc: 'وصف موجز لما يظهر على الجانب الأيسر في هذا القسم.'
-    }
-  };
-
-  function setSimplePanelText(prefix, headline, desc){
-    const h = document.getElementById(`${prefix}Headline`);
-    const d = document.getElementById(`${prefix}Desc`);
-    if(h) h.textContent = headline || '';
-    if(d) d.textContent = desc || '';
-  }
-
-  function applyOptionLayout(key){
-    bodyEl.classList.remove('summary-right','summary-both','swap-right');
-    const leftPanel = document.getElementById('simpleLeftPanel');
-    const rightPanel = document.getElementById('simpleRightPanel');
-    if(leftPanel) leftPanel.setAttribute('aria-hidden', 'true');
-    if(rightPanel) rightPanel.setAttribute('aria-hidden', 'true');
-
-    const layout = SIMPLE_LAYOUTS[key];
-    if(!layout) return;
-
-    setSimplePanelText('simpleLeft', layout.headline, layout.desc);
-    setSimplePanelText('simpleRight', layout.headline, layout.desc);
-
-    if(layout.mode === 'summary-right'){
-      bodyEl.classList.add('summary-right');
-      if(rightPanel) rightPanel.setAttribute('aria-hidden', 'false');
-    } else if(layout.mode === 'summary-both'){
-      bodyEl.classList.add('summary-both');
-      if(rightPanel) rightPanel.setAttribute('aria-hidden', 'false');
-      if(leftPanel) leftPanel.setAttribute('aria-hidden', 'false');
-    } else if(layout.mode === 'swap-right'){
-      bodyEl.classList.add('swap-right');
-      if(leftPanel) leftPanel.setAttribute('aria-hidden', 'false');
-    }
+    setRightSlidesForOption(OPTION_KEYS.option1);
+    stopGalleryMapMotion();
   }
 
   window.switchSection = function(id){
@@ -4313,7 +4287,7 @@
 
     setRightSlide(0);
     setDisplayContent(id);
-    applyOptionLayout(id);
+    applyLeftSideLayout(id);
     syncKaabaPhase(id);
     requestAnimationFrame(() => setRightSlide(0));
 
