@@ -451,6 +451,12 @@
     align-items:flex-end;
     text-align:right;
   }
+  body.option-6 #leftStage{
+    display:none !important;
+  }
+  body.option-6 .frame-left .fnn3dFrame{
+    display:block !important;
+  }
   .frame-left .fnn3dFrame{
     width:calc(100% + var(--side-nav-width));
     margin-left:calc(var(--side-nav-width) * -1);
@@ -4140,7 +4146,7 @@
   };
 
   function applyLeftSideLayout(key){
-    bodyEl.classList.remove('option-7','left-stage-active');
+    bodyEl.classList.remove('option-6','option-7','left-stage-active');
     if(leftStage){
       leftStage.classList.remove('show-map','show-world-nav','show-books','show-sketchfab','show-sutro');
     }
@@ -4166,6 +4172,9 @@
 
     if(key === OPTION_KEYS.option7){
       bodyEl.classList.add('option-7');
+    }
+    if(key === OPTION_KEYS.option6){
+      bodyEl.classList.add('option-6');
     }
 
     if(goldMarker && goldMarker.getElement()){
